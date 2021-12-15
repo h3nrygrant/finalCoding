@@ -142,13 +142,11 @@ public class LoanCalcViewController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		//TODO: This is for you... so you don't have to type in values over and over.  
-		//	Uncomment the next three lines to set these default values
-		/*		
+		
 		LoanAmount.setText("75000");
 		InterestRate.setText("6.58");
 		NbrOfYears.setText("20");
-		*/
+		
 		cmbLoanType.getItems().addAll("Home", "Auto", "School");
 
 		cmbLoanType.getSelectionModel().selectFirst();
@@ -230,11 +228,12 @@ public class LoanCalcViewController implements Initializable {
 		stackedBarChart.getChildren().clear();
 		
 		lblInterestSaved.setText("");
-		
-		//TODO: The line above shows you how to clear lblInterestSaved.  Clear the rest of the calculated fields
-
+		lblMonthlyPayment.setText("");
+		lblTotalInterest.setText("");
+		lblPaymentsSaved.setText("");
+		lblTotalPayemnts.setText("");
 	}
-
+	
 	private boolean ValidateData() {
 		StringBuilder contentText = new StringBuilder();
 		// create new boolean to check if an error needs to be shown
@@ -247,16 +246,30 @@ public class LoanCalcViewController implements Initializable {
 			goodtogo = false;
 		}
 		
-		//TODO: The line above validates LoanAmount.  To fail validation, add to 'contentText' and set 'goodtoGo' to false
-		// 	add the following validaitons:
+		if (InterestRate.getText().trim().isEmpty() || Double.parseDouble(InterestRate.getText().trim()) < 0 || Double.parseDouble(InterestRate.getText().trim()) > 20) ) {
+			contentText.append("Enter the correct InterestRate. \\n");
+			goodtogo = false;
+		}
 		
-		//TODO: Validate InterestRate is between 0 and 20.  Make sure there's no alpha characters.
-
-		//TODO: Validate NbrOfYears is > 0
+		if( NbrOfYears.getText().trim().isEmpty() || Double.parseDouble(NbrOfYears.getText().trim()) <= 0) {
+			contentText.append("Enter the correct NbrOfYears. \n");
+			goodtogo = false;
+			
+		}
+	
+		if (additonalPayment.getText().trim().isEmpty() || Double.parseDouble(additonalPayment.getText().trim()) <= 0) {
+			contentText.append("Enter the correct additionalPayment. \n");
+			goodtogo = false;
+			
+					
+		}
 		
-		//TODO: Validate EscrowAmount >= 0
-		
-		//TODO: Validate AdditionalPayemnt >= 0
+		if(EscrowAmount.getText().trim().isEmpty() || Double.parseDouble(EscrowAmount.getText().trim()) <= 0) {
+			contentText.append("Enter the correct EscrowAmount. \n");
+			goodtogo = false;
+			
+					
+		}
 		
 		if (!goodtogo) {
 			Alert fail = new Alert(AlertType.ERROR);
